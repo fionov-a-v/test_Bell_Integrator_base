@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+      target: builder
+      args:
+        APP_DEBUG: ${APP_DEBUG:-0}
+    restart: on-failure
+    tty: true
+    working_dir: /var/www
+    entrypoint: /entrypoint.sh
+    env_file:
+      - .env
+    volumes:
+      - ./app:/var/www
+      - ./data/.composer:/root/.composer:rw
+      - /var/www/var/cache
+    depends_on:
+      - db
+
+  nginx:
+    build: docker/nginx
+    restart: on-failure
+    working_dir: /var/www
+    volumes:
+      - ./app/public:/var/www/public
+    depends_on:
+      - app
+    ports:
+      - ${NGINX_PORT:-80}:80
+
+  db:
+    image: postgres:14-alpine3.14
+    shm_size: '256mb'
+    restart: on-failure
+    volumes:
+      - ./data/db/:/var/lib/postgresql/data/db-files/
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      PGDATA: /var/lib/postgresql/data/db-files/
+

@@ -1,0 +1,13 @@
+# IntelliJ project files
+.idea
+*.iml
+
+# Docker
+/docker-compose.override.yml
+
+# Main Env
+/.env
+
+# Volumes
+/data/*
+!/data/.gitkeep
