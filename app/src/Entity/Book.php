@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use App\Traits\Entity\TranslatableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -18,6 +20,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Book
 {
+    use TranslatableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,9 +31,10 @@ class Book
     private $id;
 
     /**
-     * @ORM\Column(type="text", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Groups({"book:read", "book:create"})
+     * @Gedmo\Translatable()
      */
     private $title;
 

@@ -17,3 +17,6 @@ framework:
         log: true
 
     validation: { enable_annotations: true }
+
+    default_locale: en
+

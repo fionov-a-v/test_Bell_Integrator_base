@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * Class BookController
  * @package App\Controller
  *
- * @Route(path="/book/")
  */
 class BookController extends AbstractController
 {
@@ -44,7 +43,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("create", name="book_create", methods={"POST"})
+     * @Route("book/create", name="book_create", methods={"POST"})
      */
     public function create(Request $request): JsonResponse
     {
@@ -95,7 +94,8 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("{id}", name="book_get", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("book/{id}", name="book_get", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("{_locale}/book/{id}", name="book_get_tr", methods={"GET"}, requirements={"id"="\d+", "_locale"="ru|en"})
      */
     public function get($id): JsonResponse
     {
@@ -115,7 +115,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("search", name="book_search")
+     * @Route("book/search", name="book_search")
      */
     public function search(Request $request): JsonResponse
     {
