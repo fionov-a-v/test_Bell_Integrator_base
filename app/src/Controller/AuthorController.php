@@ -79,7 +79,7 @@ class AuthorController extends AbstractController
     /**
      * @Route("{id}", name="author_get", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function get($id): JsonResponse
+    public function getAuthor($id): JsonResponse
     {
         $author = $this->authorRepository->findOneBy(['id' => $id]);
 
