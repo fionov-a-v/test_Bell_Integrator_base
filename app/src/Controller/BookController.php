@@ -97,18 +97,16 @@ class BookController extends AbstractController
      * @Route("book/{id}", name="book_get", methods={"GET"}, requirements={"id"="\d+"})
      * @Route("{_locale}/book/{id}", name="book_get_tr", methods={"GET"}, requirements={"id"="\d+", "_locale"="ru|en"})
      */
-    public function get($id): JsonResponse
+    public function getBook(?Book $book): JsonResponse
     {
-        $book = $this->bookRepository->findOneBy(['id' => $id]);
-
         if (!$book) {
-            throw new NotFoundHttpException(sprintf('Book "%s" does not exist', $id));
+            throw new NotFoundHttpException(sprintf('The book does not exist'));
         }
 
         $serializedLead = $this->serializer->serialize(
             $book,
             'json',
-            [AbstractNormalizer::GROUPS => ['book:read']]
+            [AbstractNormalizer::GROUPS => ['book:read', 'author:read']]
         );
 
         return new JsonResponse($serializedLead, Response::HTTP_OK, [], true);

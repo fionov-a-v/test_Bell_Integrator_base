@@ -18,5 +18,5 @@ framework:
 
     validation: { enable_annotations: true }
 
-    default_locale: en
+    default_locale: '%default_locale%'
 
